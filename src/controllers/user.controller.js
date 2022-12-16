@@ -1,14 +1,24 @@
 const User = require("../models/user.model.js");
+const bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 
 exports.register = (req, res) => {
+
+const hashedPasswword = bcrypt.hashSync(req.body.password, 10);
+
+
+  //console.log(req.body);
   const newUser = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    password: req.body.password
+    password: hashedPasswword
   })
   newUser.save()
     .then((user) => {
+      //dans le body du token, insérer l'ID du user et isAdmin
+      //renvoyer en réponse uniquement le token
+      var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
       res.send(user)
     })
     .catch(err => {
