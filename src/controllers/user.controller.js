@@ -18,8 +18,13 @@ const hashedPasswword = bcrypt.hashSync(req.body.password, 10);
     .then((user) => {
       //dans le body du token, insérer l'ID du user et isAdmin
       //renvoyer en réponse uniquement le token
-      var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
-      res.send(user)
+      var userToken = jwt.sign({
+        id:user._id,
+        isAdmin:user.isAdmin
+      },process.env.JWT_SECRET);
+      res.send({
+        token:userToken
+      })
     })
     .catch(err => {
       res.status(404).send(err)
