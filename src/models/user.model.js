@@ -30,6 +30,20 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    type: [
+        {
+            type: String,
+            enum:["CUSTOMER,OWNER"],
+            default:"CUSTOMER"
+        }
+    ],
+    place:[
+        {type: mongoose.Schema.Types.ObjectId,
+        ref: "place"
+        }
+    ]
 })
 
 module.exports=mongoose.model('User', userSchema);
+
+//rajouter propriété "type" ENUM [,OWNER, CUSTOMER]
