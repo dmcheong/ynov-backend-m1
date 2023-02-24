@@ -1,13 +1,14 @@
 const errorHandler = ('err, req, res,next') => {
 
-    console.log(err);
+    const errStatus = err.statusCose || 500;
+    const message = err.message || "something went wrong";
 
-
-
-    success: false;
-    status(err);
-    message:
-    env.
+    res.status(errStatus).send({
+        succes:false,
+        status: errStatus,
+        message: message,
+        stack: process.env.NODE_ENV
+    })
 
 }
 
